@@ -33,6 +33,8 @@ cd code/C1
 python 01_langchain_example.py
 ```
 
+> 若出现nltk相关报错，尝试运行代码路径下[fix_nltk.py](https://github.com/datawhalechina/all-in-rag/blob/main/code/C1/fix_nltk.py)
+
 代码运行后，可以看到类似下面的输出（格式化后）：
 
 ```bash

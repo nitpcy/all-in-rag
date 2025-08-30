@@ -83,8 +83,12 @@ base_response = base_query_engine.query(query)
 print(f"回答: {base_response}\n")
 ```
 
+<<<<<<< HEAD
 1. **构建句子窗口索引 (`sentence_index`)**：这一步利用了 `SentenceWindowNodeParser`。它将文档解析为以单个句子为单位的 `Node`，同时将包含上下文的“窗口”文本（默认为前后各3个句子）存储在每个 `Node` 的元数据中。这一步是实现“为检索精确性而索引小块”思想的关键。
 2. **构建查询引擎与后处理**：查询引擎的构建是实现“为生成质量而扩展上下文”的关键。
+=======
+1.  **构建句子窗口索引**：这一步利用了 `SentenceWindowNodeParser`。它将文档解析为以单个句子为单位的 `Node`，同时将包含上下文的“窗口”文本（默认为前后各3个句子）存储在每个 `Node` 的元数据中。这一步是实现“为检索精确性而索引小块”思想的关键。
+>>>>>>> cd916a3b71f1e97a2d7a18933323713970ce0439
 
    * 在创建 `sentence_query_engine` 时，配置中加入了一个重要的后处理器 `MetadataReplacementPostProcessor`。
    * 它的作用是：当检索器根据用户查询找到最相关的节点（也就是单个句子）后，这个后处理器会立即介入。

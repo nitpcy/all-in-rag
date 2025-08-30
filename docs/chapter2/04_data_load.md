@@ -74,16 +74,11 @@ Unstructured能够识别和分类以下文档元素：
 
 在第一章的示例中，我们使用了LangChain的`UnstructuredMarkdownLoader`，它是LangChain对Unstructured库的封装。接下来展示如何直接使用Unstructured库，这样可以获得更大的灵活性和控制力。
 
-### 3.1 安装依赖
-
-```bash
-cd code/C2
-pip install -r requirements.txt
-```
-
-### 3.2 代码示例
+### 3.1 代码示例
 
 创建一个简单的示例，尝试使用Unstructured库加载并解析一个PDF文件：
+
+> 若代码运行出现报错 `ImportError: libgl.so.1 cannot open shared object file no such file or directory`, 执行 `sudo apt-get install python3-opencv` 安装依赖库。
 
 ```python
 from unstructured.partition.auto import partition
@@ -125,7 +120,7 @@ for i, element in enumerate(elements, 1):
 
 `partition`函数使用自动文件类型检测，内部会根据文件类型路由到对应的专用函数（如PDF文件会调用`partition_pdf`）。如果需要更专业的PDF处理，可以直接使用`from unstructured.partition.pdf import partition_pdf`，它提供更多PDF特有的参数选项，如OCR语言设置、图像提取、表格结构推理等高级功能，同时性能更优。
 
-> **完整代码文件**：[`01_unstructured_example.py`](../../code/C2/01_unstructured_example.py)
+> **完整代码文件**：[`01_unstructured_example.py`](https://github.com/datawhalechina/all-in-rag/blob/main/code/C2/01_unstructured_example.py)
 
 > [**Unstructured官方文档**](https://docs.unstructured.io/open-source/core-functionality/partitioning)
 
