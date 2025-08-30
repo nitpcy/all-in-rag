@@ -1,5 +1,7 @@
 from openai import OpenAI
 import os
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())
 
 # 初始化 OpenAI 客户端
 client = OpenAI(
@@ -38,10 +40,13 @@ tools = [
     },
 ]
 
+
 # 1. 用户提问，模型决策调用工具
 messages = [{"role": "user", "content": "杭州今天天气怎么样？"}]
 print(f"User> {messages[0]['content']}\n")
 message = send_messages(messages, tools=tools)
+
+import pdb; pdb.set_trace()
 
 # 2. 执行工具，并将结果返回模型
 if message.tool_calls:

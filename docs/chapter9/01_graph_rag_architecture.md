@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 使用Docker Compose方式安装Neo4j，配置文件位于 [`data/C9/docker-compose.yml`](https://github.com/datawhalechina/all-in-rag/blob/main/data/C9/docker-compose.yml)：
 
-#### 2.3.1 启动Neo4j服务
+#### 2.3.1 启动 服务
 
 ```bash
 # 进入docker-compose.yml所在目录
@@ -60,6 +60,7 @@ docker-compose ps
 #### 2.3.2 访问Neo4j Web界面
 
 启动成功后，可以通过以下方式访问：
+
 - **Web界面**：http://localhost:7474
 - **用户名**：neo4j
 - **密码**：all-in-rag
@@ -75,6 +76,7 @@ Docker Compose配置中包含了自动数据导入功能。启动服务时会自
 3. **导入菜谱数据**：包括菜谱、食材、烹饪步骤等节点和关系
 
 导入的数据包括：
+
 - **菜谱节点**：包含菜名、难度、烹饪时间、菜系等信息
 - **食材节点**：包含食材名称、分类、营养信息等
 - **烹饪步骤节点**：包含步骤描述、烹饪方法、所需工具等
@@ -138,23 +140,23 @@ flowchart TD
     %% 系统启动和初始化
     START["🚀 启动高级图RAG系统"] --> CONFIG["⚙️ 加载配置<br/>GraphRAGConfig"]
     CONFIG --> INIT_CHECK{"🔍 检查系统依赖"}
-    
+  
     %% 依赖检查
     INIT_CHECK -->|Neo4j连接失败| NEO4J_ERROR["❌ Neo4j连接错误<br/>检查图数据库状态"]
     INIT_CHECK -->|Milvus连接失败| MILVUS_ERROR["❌ Milvus连接错误<br/>检查向量数据库"]
     INIT_CHECK -->|LLM API失败| LLM_ERROR["❌ LLM API错误<br/>检查API密钥"]
     INIT_CHECK -->|依赖正常| INIT_MODULES["✅ 初始化核心模块"]
-    
+  
     %% 知识库状态检查
     INIT_MODULES --> KB_CHECK{"📚 检查知识库状态"}
     KB_CHECK -->|Milvus集合存在| LOAD_KB["⚡ 加载已存在知识库"]
     KB_CHECK -->|集合不存在| BUILD_KB["🔨 构建新知识库"]
-    
+  
     %% 加载已有知识库
     LOAD_KB --> LOAD_SUCCESS{"加载成功？"}
     LOAD_SUCCESS -->|成功| SYSTEM_READY["✅ 系统就绪<br/>显示统计信息"]
     LOAD_SUCCESS -->|失败| REBUILD_KB["🔄 重建知识库"]
-    
+  
     %% 构建新知识库流程
     BUILD_KB --> NEO4J_LOAD["🔗 从Neo4j加载图数据<br/>菜谱、食材、烹饪步骤节点"]
     REBUILD_KB --> NEO4J_LOAD
@@ -162,86 +164,86 @@ flowchart TD
     BUILD_DOCS --> CHUNK_DOCS["✂️ 智能文档分块<br/>按章节或长度分块"]
     CHUNK_DOCS --> BUILD_VECTOR["🎯 构建Milvus向量索引"]
     BUILD_VECTOR --> SYSTEM_READY
-    
+  
     %% 用户交互循环
     SYSTEM_READY --> USER_INPUT["👤 用户输入查询"]
     USER_INPUT --> SPECIAL_CMD{"🔍 特殊命令检查"}
-    
+  
     %% 特殊命令处理
     SPECIAL_CMD -->|stats| STATS["📊 显示系统统计<br/>路由统计、知识库状态"]
     SPECIAL_CMD -->|rebuild| REBUILD_CMD["🔄 重建知识库命令"]
     SPECIAL_CMD -->|quit| EXIT["👋 退出系统"]
-    
+  
     %% 普通查询处理 - 智能路由核心
     SPECIAL_CMD -->|普通查询| QUERY_ANALYSIS["🧠 深度查询分析"]
-    
+  
     %% 查询分析的四个维度
     QUERY_ANALYSIS --> COMPLEXITY_ANALYSIS["📊 复杂度分析<br/>0.0-0.3: 简单查找<br/>0.4-0.7: 中等复杂<br/>0.8-1.0: 高复杂推理"]
     QUERY_ANALYSIS --> RELATION_ANALYSIS["🔗 关系密集度分析<br/>0.0-0.3: 单一实体<br/>0.4-0.7: 实体关系<br/>0.8-1.0: 复杂关系网络"]
     QUERY_ANALYSIS --> REASONING_ANALYSIS["🤔 推理需求判断<br/>多跳推理？因果分析？<br/>对比分析？"]
     QUERY_ANALYSIS --> ENTITY_ANALYSIS["🏷️ 实体识别统计<br/>实体数量和类型"]
-    
+  
     %% LLM智能分析
     COMPLEXITY_ANALYSIS --> LLM_ANALYSIS["🤖 LLM智能分析<br/>综合评估查询特征"]
     RELATION_ANALYSIS --> LLM_ANALYSIS
     REASONING_ANALYSIS --> LLM_ANALYSIS
     ENTITY_ANALYSIS --> LLM_ANALYSIS
-    
+  
     %% 分析结果和降级处理
     LLM_ANALYSIS --> ANALYSIS_SUCCESS{"分析成功？"}
     ANALYSIS_SUCCESS -->|成功| ROUTE_DECISION["🎯 智能路由决策"]
     ANALYSIS_SUCCESS -->|失败| RULE_FALLBACK["📋 降级到规则分析<br/>基于关键词匹配"]
     RULE_FALLBACK --> ROUTE_DECISION
-    
+  
     %% 三种检索策略路由
     ROUTE_DECISION -->|简单查询<br/>复杂度<0.4| HYBRID_SEARCH["🔍 传统混合检索<br/>保底策略"]
     ROUTE_DECISION -->|复杂推理<br/>关系密集>0.7| GRAPH_RAG_SEARCH["🕸️ 图RAG检索<br/>高级复杂策略"]
     ROUTE_DECISION -->|中等复杂<br/>需要组合| COMBINED_SEARCH["🔄 组合检索策略<br/>融合两种方法"]
-    
+  
     %% 检索执行和错误处理
     HYBRID_SEARCH --> HYBRID_SUCCESS{"检索成功？"}
     GRAPH_RAG_SEARCH --> GRAPH_SUCCESS{"检索成功？"}
     COMBINED_SEARCH --> COMBINED_SUCCESS{"检索成功？"}
-    
+  
     %% 高级策略失败时降级到传统混合检索
     GRAPH_SUCCESS -->|失败| FALLBACK_TO_HYBRID["⬇️ 降级到传统混合检索<br/>保底方案"]
     COMBINED_SUCCESS -->|失败| FALLBACK_TO_HYBRID
-    
+  
     %% 传统混合检索失败时直接异常
     HYBRID_SUCCESS -->|失败| SYSTEM_ERROR["❌ 系统检索异常<br/>传统混合检索失败<br/>无更低级降级"]
     FALLBACK_TO_HYBRID --> FALLBACK_SUCCESS{"降级检索成功？"}
     FALLBACK_SUCCESS -->|失败| SYSTEM_ERROR
-    
+  
     %% 成功路径
     HYBRID_SUCCESS -->|成功| GENERATE["🎨 生成回答"]
     GRAPH_SUCCESS -->|成功| GENERATE
     COMBINED_SUCCESS -->|成功| GENERATE
     FALLBACK_SUCCESS -->|成功| GENERATE
-    
+  
     %% 固定的流式输出
     GENERATE --> STREAM_OUTPUT["📺 流式输出回答<br/>use_stream = True<br/>逐字符实时显示"]
-    
+  
     %% 统计更新和循环
     STREAM_OUTPUT --> UPDATE_STATS["📈 更新路由统计"]
     UPDATE_STATS --> USER_INPUT
-    
+  
     %% 特殊命令返回循环
     STATS --> USER_INPUT
     REBUILD_CMD --> BUILD_KB
-    
+  
     %% 错误处理返回
     NEO4J_ERROR --> EXIT
     MILVUS_ERROR --> EXIT
     LLM_ERROR --> EXIT
     SYSTEM_ERROR --> USER_INPUT
-    
+  
     %% 详细子流程
     subgraph DataFlow ["📊 图数据处理流程"]
         NEO4J_DB["🗄️ Neo4j图数据库<br/>存储菜谱、食材、烹饪步骤<br/>以及它们之间的关系网络"]
         RECIPE_BUILD["📝 结构化菜谱文档构建<br/>菜谱名称 + 分类 + 难度<br/>+ 食材列表 + 制作步骤<br/>+ 时间信息 + 标签"]
         DOC_CHUNK["✂️ 智能文档分块<br/>按章节分块：## 所需食材、## 制作步骤<br/>或按长度分块：chunk_size=500<br/>重叠处理：chunk_overlap=50"]
         MILVUS_INDEX["🎯 Milvus向量索引<br/>BGE-small-zh-v1.5<br/>512维向量空间"]
-        
+      
         NEO4J_DB --> RECIPE_BUILD
         RECIPE_BUILD --> DOC_CHUNK
         DOC_CHUNK --> MILVUS_INDEX
@@ -252,46 +254,46 @@ flowchart TD
         VECTOR_SEARCH["📊 增强向量检索<br/>语义相似度匹配"]
         RRF_MERGE["⚖️ RRF轮询融合<br/>公平合并不同结果"]
         INTERNAL_FALLBACK["🔧 内部降级机制<br/>关键词提取失败→简单分词<br/>图索引不足→Neo4j补充<br/>Neo4j失败→静默失败"]
-        
+      
         DUAL_RETRIEVAL --> RRF_MERGE
         VECTOR_SEARCH --> RRF_MERGE
         INTERNAL_FALLBACK --> RRF_MERGE
     end
-    
+  
     subgraph GraphRAGFlow ["🕸️ 图RAG检索流程（高级复杂）"]
         GRAPH_UNDERSTAND["🧠 图查询理解<br/>entity_relation/multi_hop<br/>subgraph/path_finding"]
         MULTI_HOP["🔄 多跳图遍历<br/>最大深度3跳<br/>发现隐含关联"]
         SUBGRAPH_EXTRACT["🕸️ 知识子图提取<br/>完整知识网络<br/>最大100节点"]
         GRAPH_REASONING["🤔 图结构推理<br/>推理链构建<br/>可信度验证"]
-        
+      
         GRAPH_UNDERSTAND --> MULTI_HOP
         GRAPH_UNDERSTAND --> SUBGRAPH_EXTRACT
         MULTI_HOP --> GRAPH_REASONING
         SUBGRAPH_EXTRACT --> GRAPH_REASONING
     end
-    
+  
     subgraph CombinedFlow ["🔄 组合检索流程"]
         SPLIT_QUOTA["📊 分配检索配额<br/>traditional_k = top_k // 2<br/>graph_k = top_k - traditional_k"]
         PARALLEL_SEARCH["⚡ 并行执行检索<br/>传统检索 + 图RAG检索"]
         ROUND_ROBIN["🔄 Round-robin合并<br/>交替添加结果<br/>图RAG优先"]
         DEDUP["🧹 去重和排序<br/>基于内容哈希"]
-        
+      
         SPLIT_QUOTA --> PARALLEL_SEARCH
         PARALLEL_SEARCH --> ROUND_ROBIN
         ROUND_ROBIN --> DEDUP
     end
-    
+  
     subgraph FallbackStrategy ["⬇️ 降级策略（有限降级）"]
         LEVEL3["🕸️ 图RAG检索<br/>最高级：多跳推理+子图提取"]
         LEVEL2["🔄 组合检索<br/>中级：融合两种方法"]
         LEVEL1["🔍 传统混合检索<br/>保底：无更低级降级"]
         ERROR_LEVEL["❌ 系统异常<br/>传统混合检索失败"]
-        
+      
         LEVEL3 -->|失败| LEVEL1
         LEVEL2 -->|失败| LEVEL1
         LEVEL1 -->|失败| ERROR_LEVEL
     end
-    
+  
     %% 样式定义
     classDef startup fill:#e3f2fd,stroke:#0277bd,stroke-width:2px
     classDef config fill:#f1f8e9,stroke:#388e3c,stroke-width:2px
@@ -308,7 +310,7 @@ flowchart TD
     classDef stream fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
     classDef combined fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
     classDef graphdata fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
-    
+  
     %% 应用样式
     class START,INIT_MODULES,SYSTEM_READY startup
     class CONFIG config
@@ -330,48 +332,55 @@ flowchart TD
 ### 3.2 核心模块说明
 
 #### 图数据准备模块 (GraphDataPreparationModule)
+
 - **功能**：连接Neo4j数据库，加载图数据，构建结构化菜谱文档
 - **特点**：支持图数据到文档的智能转换，保持知识结构完整性
 
-#### 向量索引模块 (MilvusIndexConstructionModule)  
+#### 向量索引模块 (MilvusIndexConstructionModule)
+
 - **功能**：构建和管理Milvus向量索引，支持语义相似度检索
 - **特点**：使用BGE-small-zh-v1.5模型，512维向量空间
 
 #### 混合检索模块 (HybridRetrievalModule)
+
 - **功能**：传统的混合检索策略，结合向量检索和图扩展
 - **特点**：双层检索（实体级+主题级），RRF轮询融合
 
 #### 图RAG检索模块 (GraphRAGRetrieval)
+
 - **功能**：基于图结构的高级检索，支持多跳推理和子图提取
 - **特点**：图查询理解、多跳遍历、知识子图提取
 
 #### 智能查询路由 (IntelligentQueryRouter)
+
 - **功能**：分析查询特征，自动选择最适合的检索策略
 - **特点**：LLM驱动的查询分析，动态策略选择
 
 #### 生成集成模块 (GenerationIntegrationModule)
+
 - **功能**：基于检索结果生成最终答案，支持流式输出
 - **特点**：自适应生成策略，错误处理与重试机制
 
 ### 3.3 数据流程
 
 1. **数据准备阶段**：
+
    - 从Neo4j加载图数据（菜谱、食材、步骤节点及其关系）
    - 构建结构化菜谱文档，保持知识完整性
    - 进行智能文档分块，支持章节和长度双重分块策略
    - 构建Milvus向量索引，支持语义检索
-
 2. **查询处理阶段**：
+
    - 用户输入查询
    - 智能查询路由器分析查询特征（复杂度、关系密集度、推理需求）
    - 根据分析结果选择检索策略：
      - 简单查询 → 传统混合检索
-     - 复杂推理 → 图RAG检索  
+     - 复杂推理 → 图RAG检索
      - 中等复杂 → 组合检索策略
    - 执行相应的检索操作
    - 生成模块基于检索结果生成答案
-
 3. **错误处理与降级**：
+
    - 高级策略失败时自动降级到传统混合检索
    - 传统混合检索失败时返回系统异常
    - 支持流式输出中断时的自动重试机制
@@ -405,6 +414,7 @@ python main.py
 ### 5.2 系统初始化
 
 首次运行时，系统会自动：
+
 1. 检查并连接Neo4j和Milvus数据库
 2. 加载图数据并构建菜谱文档
 3. 创建向量索引

@@ -64,13 +64,13 @@ KG-RAG将检索的目标从独立的文本片段转变为在知识图谱中寻�
 
 ### 3.1 GraphRAG (Microsoft)
 
-GraphRAG是一个重量级的框架，其核心思想是"先构建全局知识，再按需检索"[^1][^2]。它首先将整个数据集处理成一个庞大的知识图谱，然后利用社区检测算法对图进行分层和聚类，并为每个社区生成摘要。查询时，系统先定位到相关的全局摘要，再深入到具体的社区和局部信息。
+GraphRAG是一个重量级的框架，其核心思想是"先构建全局知识，再按需检索"[^2]。它首先将整个数据集处理成一个庞大的知识图谱，然后利用社区检测算法对图进行分层和聚类，并为每个社区生成摘要。查询时，系统先定位到相关的全局摘要，再深入到具体的社区和局部信息。
 
 GraphRAG的优势在于能够提供对整个知识库的宏观理解，特别适合需要进行探索性分析和生成全局性总结的任务。然而，前期构建知识图谱和社区摘要的计算成本和时间开销巨大，可能不适用于需要高实时性的动态数据环境。
 
 ### 3.2 LightRAG
 
-针对GraphRAG的重量级问题，香港大学研究团队提出的LightRAG旨在实现一个轻量、高效且可扩展的框架[^3][^4]。
+针对GraphRAG的重量级问题，香港大学研究团队提出的LightRAG旨在实现一个轻量、高效且可扩展的框架[^4]。
 
 其核心架构创新是"双层检索范式"和"图增强文本索引"。它将图结构信息深度整合到文本索引中，通过向量化的方式实现图的遍历，避免了复杂的社区发现过程。双层检索系统被形象地比喻为同时拥有"显微镜"（关注细节的低层级检索）和"望远镜"（捕捉全局图景的高层级检索）。
 
@@ -111,23 +111,20 @@ KG-RAG的评估体系是多维度的，主要涵盖三个方面。
 将KG-RAG框架从实验室推向生产环境，面临着一系列独特的工程和技术挑战。
 
 - **知识图谱的构建与动态维护**：高质量知识图谱的构建本身就是一项耗时耗力的知识工程。在生产环境中，知识需要持续保持最新状态，如何设计高效、准确、低成本的动态更新机制是核心难点。
-
 - **系统性能与可扩展性**：随着知识库规模和用户查询量的增长，系统的响应延迟、吞吐量和资源消耗成为主要瓶颈。生产部署需要应对向量化速度慢、内存溢出、API失败等具体问题。
-
 - **安全与隐私保护**：RAG系统引入外部数据源，带来了新的安全风险，包括数据隐私泄露、模型被注入恶意数据（模型中毒）、以及针对检索模块的攻击等。
-
 - **成本控制**：大规模部署KG-RAG系统需要大量的计算和存储资源，如何优化系统架构以降低运营成本是一个重要的商业考量。
 
 ## 参考文献
 
 [^1]: [Edge et al. (2024). *From Local to Global: A Graph RAG Approach to Query-Focused Summarization*](https://arxiv.org/abs/2404.16130)
-
+    
 [^2]: [Microsoft GraphRAG Documentation](https://microsoft.github.io/graphrag/)
-
+    
 [^3]: [Guo et al. (2024). *LightRAG: Simple and Fast Retrieval-Augmented Generation*](https://arxiv.org/abs/2410.05779)
-
+    
 [^4]: [HKUDS LightRAG Repository](https://github.com/HKUDS/LightRAG)
-
+    
 [^5]: [Zhang et al. (2025). *FRAG: A Flexible Modular Framework for Retrieval-Augmented Generation based on Knowledge Graphs*](https://arxiv.org/abs/2501.09957)
-
+    
 [^6]: [Chen et al. (2025). *KG-IRAG: A Knowledge Graph-Based Iterative Retrieval-Augmented Generation Framework for Temporal Reasoning*](https://arxiv.org/abs/2503.14234)

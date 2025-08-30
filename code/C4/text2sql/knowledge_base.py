@@ -80,6 +80,7 @@ class SimpleKnowledgeBase:
         print("知识库数据加载完成")
     
     def _add_ddl_data(self, data: List[Dict]):
+        import pdb; pdb.set_trace()
         """添加DDL数据"""
         contents = []
         types = []

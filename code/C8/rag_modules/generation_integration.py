@@ -63,11 +63,11 @@ class GenerationIntegrationModule:
         context = self._build_context(context_docs)
 
         prompt = ChatPromptTemplate.from_template("""
-你是一位专业的烹饪助手。请根据以下食谱信息回答用户的问题。
+你是一位专业的烹饪助手。我会提供一些<相关食谱信息>，请你根据用户的问题来判断是否需要结合这些<相关食谱信息>回答。如果需要请你结合<相关食谱信息>来回答，如果不需要请你直接根据你的知识库和现在的应用场景来回答。
 
-用户问题: {question}
+<用户问题>: {question}
 
-相关食谱信息:
+<相关食谱信息>:
 {context}
 
 请提供详细、实用的回答。如果信息不足，请诚实说明。

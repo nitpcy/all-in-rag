@@ -85,7 +85,7 @@ class IndexConstructionModule:
         """
         if not self.vectorstore:
             raise ValueError("请先构建向量索引")
-
+        
         # 确保保存目录存在
         Path(self.index_save_path).mkdir(parents=True, exist_ok=True)
 

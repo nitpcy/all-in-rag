@@ -7,7 +7,7 @@ from pymilvus.model.hybrid import BGEM3EmbeddingFunction
 # 1. 初始化设置
 COLLECTION_NAME = "dragon_hybrid_demo"
 MILVUS_URI = "http://localhost:19530"  # 服务器模式
-DATA_PATH = "../../data/C4/metadata/dragon.json"  # 相对路径
+DATA_PATH = "data/C4/metadata/dragon.json"  # 相对路径
 BATCH_SIZE = 50
 
 # 2. 连接 Milvus 并初始化嵌入模型
@@ -18,7 +18,7 @@ print("--> 正在初始化 BGE-M3 嵌入模型...")
 ef = BGEM3EmbeddingFunction(use_fp16=False, device="cpu")
 print(f"--> 嵌入模型初始化完成。密集向量维度: {ef.dim['dense']}")
 
-# 3. 创建 Collection
+# 2. 连接 Milvus 并初始化嵌入模型
 milvus_client = MilvusClient(uri=MILVUS_URI)
 if milvus_client.has_collection(COLLECTION_NAME):
     print(f"--> 正在删除已存在的 Collection '{COLLECTION_NAME}'...")
@@ -132,6 +132,7 @@ query_embeddings = ef([search_query])
 dense_vec = query_embeddings["dense"][0]
 sparse_vec = query_embeddings["sparse"]._getrow(0)
 
+# import pdb; pdb.set_trace()
 # 打印向量信息
 print("\n=== 向量信息 ===")
 print(f"密集向量维度: {len(dense_vec)}")

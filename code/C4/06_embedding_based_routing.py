@@ -6,7 +6,8 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.runnables import RunnableLambda, RunnablePassthrough, RunnablePassthrough
 from langchain_community.utils.math import cosine_similarity
 import numpy as np
-
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())
 # 1. 定义路由描述
 sichuan_route_prompt = "你是一位处理川菜的专家。用户的问题是关于麻辣、辛香、重口味的菜肴，例如水煮鱼、麻婆豆腐、鱼香肉丝、宫保鸡丁、花椒、海椒等。"
 cantonese_route_prompt = "你是一位处理粤菜的专家。用户的问题是关于清淡、鲜美、原汁原味的菜肴，例如白切鸡、老火靓汤、虾饺、云吞面等。"
@@ -17,6 +18,7 @@ route_names = ["川菜", "粤菜"]
 # 初始化嵌入模型，并对路由描述进行向量化
 embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-zh-v1.5")
 route_prompt_embeddings = embeddings.embed_documents(route_prompts)
+
 print(f"已定义 {len(route_names)} 个路由: {', '.join(route_names)}")
 
 # 2. 定义不同路由的目标链
@@ -45,6 +47,7 @@ print("川菜和粤菜的处理链创建成功。\n")
 def route(info):
     # 对用户查询进行嵌入
     query_embedding = embeddings.embed_query(info["query"])
+    import pdb; pdb.set_trace()
     
     # 计算与各路由提示的余弦相似度
     similarity_scores = cosine_similarity([query_embedding], route_prompt_embeddings)[0]

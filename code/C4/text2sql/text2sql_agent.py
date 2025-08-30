@@ -36,7 +36,7 @@ class SimpleText2SQLAgent:
         self.knowledge_base.load_data()
     
     def query(self, user_question: str) -> Dict[str, Any]:
-        """执行Text2SQL查询"""
+        """ 执行Text2SQL查询 """
         if not self.connection:
             return {
                 "success": False,
@@ -47,6 +47,7 @@ class SimpleText2SQLAgent:
         
         print(f"\n=== 处理查询: {user_question} ===")
         
+        import pdb;pdb.set_trace()
         # 1. 从知识库检索
         print("检索知识库...")
         knowledge_results = self.knowledge_base.search(user_question, self.top_k_retrieval)

@@ -5,14 +5,16 @@ from llama_index.llms.deepseek import DeepSeek
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core.postprocessor import MetadataReplacementPostProcessor
 
+
 # 1. 配置模型
 Settings.llm = DeepSeek(model="deepseek-chat", temperature=0.1, api_key=os.getenv("DEEPSEEK_API_KEY"))
 Settings.embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en")
 
 # 2. 加载文档
 documents = SimpleDirectoryReader(
-    input_files=["../../data/C3/pdf/IPCC_AR6_WGII_Chapter03.pdf"]
+    input_files=["data/C3/pdf/IPCC_AR6_WGII_Chapter03.pdf"]
 ).load_data()
+import pdb; pdb.set_trace()
 
 # 3. 创建节点与构建索引
 # 3.1 句子窗口索引

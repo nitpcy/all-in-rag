@@ -8,25 +8,23 @@
 
 要使用 Deepseek 提供的大语言模型服务，你首先需要一个 API Key。下面是申请步骤：
 
-1.  **访问 Deepseek 开放平台**
-    打开浏览器，访问 [Deepseek 开放平台](https://platform.deepseek.com/)。
+1. **访问 Deepseek 开放平台**
+   打开浏览器，访问 [Deepseek 开放平台](https://platform.deepseek.com/)。
 
-    ![Deepseek 平台首页](./images/1_2_1.webp)
+   ![Deepseek 平台首页](./images/1_2_1.webp)
+2. **登录或注册账号**
+   如果你已有账号，请直接登录。如果没有，请点击页面上的注册按钮，使用邮箱或手机号完成注册。
+3. **创建新的 API 密钥**
+   登录成功后，在页面左侧的导航栏中找到并点击 `API Keys`。在 API 管理页面，点击 `创建 API key` 按钮。输入一个跟其他api key不重复的名称后点击创建
 
-2.  **登录或注册账号**
-    如果你已有账号，请直接登录。如果没有，请点击页面上的注册按钮，使用邮箱或手机号完成注册。
+   ![创建新密钥按钮](./images/1_2_2.webp)
+4. **保存 API Key**
+   系统会为你生成一个新的 API 密钥。请**立即复制**并将其保存在一个安全的地方。
 
-3.  **创建新的 API 密钥**
-    登录成功后，在页面左侧的导航栏中找到并点击 `API Keys`。在 API 管理页面，点击 `创建 API key` 按钮。输入一个跟其他api key不重复的名称后点击创建
+   > 注意：出于安全原因，这个密钥只会完整显示一次，关闭弹窗后就没法再看到了。
+   >
 
-    ![创建新密钥按钮](./images/1_2_2.webp)
-
-4.  **保存 API Key**
-    系统会为你生成一个新的 API 密钥。请**立即复制**并将其保存在一个安全的地方。
-
-    > 注意：出于安全原因，这个密钥只会完整显示一次，关闭弹窗后就没法再看到了。
-
-    ![复制并保存密钥](./images/1_2_3.webp)
+   ![复制并保存密钥](./images/1_2_3.webp)
 
 ## 二、GitHub Codespaces 环境配置（推荐）
 
@@ -36,31 +34,27 @@ GitHub Codespaces 是 GitHub 提供的一项服务，允许开发者在云端创
 
 ### 2.1 创建Codespaces
 
-1.  **访问项目地址**
+1. **访问项目地址**
 
-    打开浏览器，访问 [all-in-rag](https://github.com/datawhalechina/all-in-rag)
+   打开浏览器，访问 [all-in-rag](https://github.com/datawhalechina/all-in-rag)
+2. **创建新分支**
+   在项目页面的右上角，点击 `Fork` 按钮，创建一个新的分支。稍等一会儿即可创建成功。
 
-2.  **创建新分支**
-    在项目页面的右上角，点击 `Fork` 按钮，创建一个新的分支。稍等一会儿即可创建成功。
+   ![创建新分支1](./images/1_2_4.webp)
 
-    ![创建新分支1](./images/1_2_4.webp)
+   ![创建新分支2](./images/1_2_5.webp)
+3. **创建Codespaces**
+   在项目页面的右上角，点击 `Code` 按钮，然后选择 `Codespaces` 选项卡。点击 `New codespace` 按钮，等待新的 Codespaces 环境创建成功。
 
-    ![创建新分支2](./images/1_2_5.webp)
+   ![创建Codespaces](./images/1_2_6.webp)
+4. **再次进入Codespaces**
+   网页关闭后，找到刚才新建的存储库，点击红框框选内容即可重新进入 codespace 环境。
 
-3.  **创建Codespaces**
-    在项目页面的右上角，点击 `Code` 按钮，然后选择 `Codespaces` 选项卡。点击 `New codespace` 按钮，等待新的 Codespaces 环境创建成功。
+   ![再次进入Codespaces](./images/1_2_7.webp)
+5. **额度设置**
+   找到 GitHub 的账户设置中的 codespace 设置，挂起时间建议根据自己情况调整（时间过长会浪费额度，免费账号提供了单核120小时的额度）
 
-    ![创建Codespaces](./images/1_2_6.webp)
-
-4.  **再次进入Codespaces**
-    网页关闭后，找到刚才新建的存储库，点击红框框选内容即可重新进入 codespace 环境。
-
-    ![再次进入Codespaces](./images/1_2_7.webp)
-
-5.  **额度设置**
-    找到 GitHub 的账户设置中的 codespace 设置，挂起时间建议根据自己情况调整（时间过长会浪费额度，免费账号提供了单核120小时的额度）
-
-    ![额度设置](./images/1_2_8.webp)
+   ![额度设置](./images/1_2_8.webp)
 
 ### 2.2 python环境配置
 
@@ -68,83 +62,78 @@ GitHub Codespaces 是 GitHub 提供的一项服务，允许开发者在云端创
 
 ![进入终端](./images/1_2_9.webp)
 
-1.  **更新系统软件包**
+1. **更新系统软件包**
 
-    在终端输入下面指令：
+   在终端输入下面指令：
 
-    ```bash
-    sudo apt update
-    sudo apt upgrade -y
-    ```
+   ```bash
+   sudo apt update
+   sudo apt upgrade -y
+   ```
+2. **安装Miniconda**
 
-2.  **安装Miniconda**
+   ```bash
+   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+   bash ~/miniconda.sh
+   ```
 
-    ```bash
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
-    bash ~/miniconda.sh
-    ```
+   - 按 Enter 阅读许可协议
+   - 输入 `yes` 同意协议
+   - 安装路径提示时直接按 Enter（使用默认路径 /home/ubuntu/miniconda3）
+   - 是否初始化Miniconda：输入 `yes` 将Miniconda添加到您的PATH环境变量中。
 
-    - 按 Enter 阅读许可协议
-    - 输入 `yes` 同意协议
-    - 安装路径提示时直接按 Enter（使用默认路径 /home/ubuntu/miniconda3）
-    - 是否初始化Miniconda：输入 `yes` 将Miniconda添加到您的PATH环境变量中。
+   ```bash
+   source ~/.bashrc
+   conda --version
+   ```
 
-    ```bash
-    source ~/.bashrc
-    conda --version
-    ```
-
-    如果显示版本号，说明安装成功。
+   如果显示版本号，说明安装成功。
 
 ### 2.3 API配置
 
-1.  使用 `vim` 编辑器打开你的 shell 配置文件。
+1. 使用 `vim` 编辑器打开你的 shell 配置文件。
 
-    ```bash
-    vim ~/.bashrc
-    ```
+   ```bash
+   vim ~/.bashrc
+   ```
+2. 输入 `i` 进入编辑模式，在文件末尾添加以下行，将 `[你的 Deepseek API 密钥]` 替换为你自己的密钥：
 
-2.  输入 `i` 进入编辑模式，在文件末尾添加以下行，将 `[你的 Deepseek API 密钥]` 替换为你自己的密钥：
+   ```bash
+   export DEEPSEEK_API_KEY=[你的 Deepseek API 密钥]
+   ```
+3. 保存并退出 在 vim 中，按 Esc 键进入命令模式，然后输入 `:wq` 并按 Enter 键保存文件并退出。
+4. 使配置生效 执行以下命令来立即加载更新后的配置，让环境变量生效：
 
-    ```bash
-    export DEEPSEEK_API_KEY=[你的 Deepseek API 密钥]
-    ```
-
-3.  保存并退出 在 vim 中，按 Esc 键进入命令模式，然后输入 `:wq` 并按 Enter 键保存文件并退出。
-
-4.  使配置生效 执行以下命令来立即加载更新后的配置，让环境变量生效：
-
-    ```bash
-    source ~/.bashrc
-    ```
+   ```bash
+   source ~/.bashrc
+   ```
 
 ### 2.4 创建并激活虚拟环境
 
-1.  **创建虚拟环境**
+1. **创建虚拟环境**
 
-    ```bash
-    conda create --name all-in-rag python=3.12.7
-    ```
+   ```bash
+   conda create --name all-in-rag python=3.12.7
+   ```
 
-    出现选项直接回车即可。
+   出现选项直接回车即可。
+2. **激活虚拟环境**
 
-2.  **激活虚拟环境**
+   使用以下命令激活虚拟环境：
 
-    使用以下命令激活虚拟环境：
+   ```bash
+   conda activate all-in-rag
+   ```
+3. **依赖安装**
+   如果严格安装上述流程当前应该在项目根目录，进入code目录安装依赖库
 
-    ```bash
-    conda activate all-in-rag
-    ```
+   ```bash
+   cd code
+   pip install -r requirements.txt
+   ```
 
-3.  **依赖安装**
-    如果严格安装上述流程当前应该在项目根目录，进入code目录安装依赖库
-
-    ```bash
-    cd code
-    pip install -r requirements.txt
-    ```
-
-    > 如果出现关于grpcio的版本错误无需在意。
+   > 如果出现关于grpcio的版本错误无需在意。
+   >
 
 ## 三、Cloud Studio 环境配置（国内环境推荐）
 
@@ -154,21 +143,18 @@ Cloud Studio 是腾讯云推出的一款基于浏览器的集成开发环境（I
 
 ### 3.1 应用创建
 
-1.  **访问 Cloud Studio**
-    打开浏览器，访问 [Cloud Studio](https://cloudstudio.net/)。
+1. **访问 Cloud Studio**
+   打开浏览器，访问 [Cloud Studio](https://cloudstudio.net/)。
+2. **登录或注册账号**
+   点击页面右上角的 `注册登录` 按钮，使用微信等方式完成登录。
+3. **创建应用**
+   在页面上方的导航栏中找到并点击 `创建应用`。选择 `从 Git 仓库导入` ，在项目地址栏输入 `https://github.com/datawhalechina/all-in-rag.git` 后回车，将会自动为你创建标题和描述。
 
-2.  **登录或注册账号**
-    点击页面右上角的 `注册登录` 按钮，使用微信等方式完成登录。
+   ![创建应用](./images/1_2_10.webp)
+4. **再次进入**
+   后续在[应用管理页面](https://cloudstudio.net/my-app)找到之前创建的应用，点击后选择右上角编写代码即可再次进入。
 
-3.  **创建应用**
-    在页面上方的导航栏中找到并点击 `创建应用`。选择 `从 Git 仓库导入` ，在项目地址栏输入 `https://github.com/datawhalechina/all-in-rag.git` 后回车，将会自动为你创建标题和描述。
-
-    ![创建应用](./images/1_2_10.webp)
-
-4.  **再次进入**
-    后续在[应用管理页面](https://cloudstudio.net/my-app)找到之前创建的应用，点击后选择右上角编写代码即可再次进入。
-
-    ![再次进入应用](./images/1_2_11.webp)
+   ![再次进入应用](./images/1_2_11.webp)
 
 ### 3.2 python环境配置
 
@@ -176,159 +162,149 @@ Cloud Studio 是腾讯云推出的一款基于浏览器的集成开发环境（I
 
 ![进入终端](./images/1_2_12.webp)
 
-1.  **更新系统软件包**
+1. **更新系统软件包**
 
-    在终端输入下面指令：
+   在终端输入下面指令：
 
-    ```bash
-    sudo apt update
-    sudo apt upgrade -y
-    ```
+   ```bash
+   sudo apt update
+   sudo apt upgrade -y
+   ```
+2. **切换普通用户**
 
-2.  **切换普通用户**
+   ```bash
+   su ubuntu
+   ```
+3. **安装Miniconda**
 
-    ```bash
-    su ubuntu
-    ```
+   ```bash
+   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+   bash ~/miniconda.sh
+   ```
 
-3.  **安装Miniconda**
+   - 按 Enter 阅读许可协议
+   - 输入 `yes` 同意协议
+   - 安装路径提示时直接按 Enter（使用默认路径 /home/ubuntu/miniconda3）
+   - 是否初始化Miniconda：输入 `yes` 将Miniconda添加到您的PATH环境变量中。
 
-    ```bash
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
-    bash ~/miniconda.sh
-    ```
+   ```bash
+   source ~/.bashrc
+   conda --version
+   ```
 
-    - 按 Enter 阅读许可协议
-    - 输入 `yes` 同意协议
-    - 安装路径提示时直接按 Enter（使用默认路径 /home/ubuntu/miniconda3）
-    - 是否初始化Miniconda：输入 `yes` 将Miniconda添加到您的PATH环境变量中。
-
-    ```bash
-    source ~/.bashrc
-    conda --version
-    ```
-
-    如果显示版本号，说明安装成功。
+   如果显示版本号，说明安装成功。
 
 ### 3.3 API配置
 
-1.  使用 `vim` 编辑器打开你的 shell 配置文件。
+1. 使用 `vim` 编辑器打开你的 shell 配置文件。
 
-    ```bash
-    vim ~/.bashrc
-    ```
+   ```bash
+   vim ~/.bashrc
+   ```
+2. 输入 `i` 进入编辑模式，在文件末尾添加以下行，将 `[你的 Deepseek API 密钥]` 替换为你自己的密钥：
 
-2.  输入 `i` 进入编辑模式，在文件末尾添加以下行，将 `[你的 Deepseek API 密钥]` 替换为你自己的密钥：
+   ```bash
+   export DEEPSEEK_API_KEY=[你的 Deepseek API 密钥]
+   ```
+3. 保存并退出 在 vim 中，按 Esc 键进入命令模式，然后输入 `:wq` 并按 Enter 键保存文件并退出。
+4. 使配置生效 执行以下命令来立即加载更新后的配置，让环境变量生效：
 
-    ```bash
-    export DEEPSEEK_API_KEY=[你的 Deepseek API 密钥]
-    ```
-
-3.  保存并退出 在 vim 中，按 Esc 键进入命令模式，然后输入 `:wq` 并按 Enter 键保存文件并退出。
-
-4.  使配置生效 执行以下命令来立即加载更新后的配置，让环境变量生效：
-
-    ```bash
-    source ~/.bashrc
-    ```
+   ```bash
+   source ~/.bashrc
+   ```
 
 ### 3.4 创建并激活虚拟环境
 
-1.  **创建虚拟环境**
+1. **创建虚拟环境**
 
-    ```bash
-    conda create --name all-in-rag python=3.12.7
-    ```
+   ```bash
+   conda create --name all-in-rag python=3.12.7
+   ```
 
-    出现选项直接回车即可。
+   出现选项直接回车即可。
+2. **配置文件权限**
 
-2.  **配置文件权限**
+   ```bash
+   sudo chown -R ubuntu:ubuntu code models
+   ```
+3. **激活虚拟环境**
 
-    ```bash
-    sudo chown -R ubuntu:ubuntu code models
-    ```
+   使用以下命令激活虚拟环境：
 
-3.  **激活虚拟环境**
+   ```bash
+   conda activate all-in-rag
+   ```
+4. **依赖安装**
+   如果严格安装上述流程当前应该在项目根目录，进入code目录安装依赖库
 
-    使用以下命令激活虚拟环境：
+   ```bash
+   cd code
+   pip install -r requirements.txt
+   ```
 
-    ```bash
-    conda activate all-in-rag
-    ```
-
-4.  **依赖安装**
-    如果严格安装上述流程当前应该在项目根目录，进入code目录安装依赖库
-
-    ```bash
-    cd code
-    pip install -r requirements.txt
-    ```
-
-    > 如果出现关于grpcio的版本错误无需在意。
+   > 如果出现关于grpcio的版本错误无需在意。
+   >
 
 ## 四、windows环境配置（使用Cloud Studio 或 Codespaces 可跳过此步骤）
 
 ### 4.1 API配置
 
-1.  右键点击 “计算机” 或 “此电脑”，然后点击 “属性”。
+1. 右键点击 “计算机” 或 “此电脑”，然后点击 “属性”。
+2. 在左侧菜单中，点击 “高级系统设置”。
+3. 在 “系统属性” 对话框中，点击 “高级” 选项卡，然后点击下方的 “环境变量” 按钮。
 
-2.  在左侧菜单中，点击 “高级系统设置”。
+   ![高级系统设置](./images/1_2_13.webp)
+4. 在 “环境变量” 对话框中，点击 “新建”（在 “用户变量” 部分下），然后输入以下信息：
 
-3.  在 “系统属性” 对话框中，点击 “高级” 选项卡，然后点击下方的 “环境变量” 按钮。
+   - 变量名：DEEPSEEK_API_KEY
+   - 变量值：[你的 Deepseek API 密钥]
 
-    ![高级系统设置](./images/1_2_13.webp)
-
-4.  在 “环境变量” 对话框中，点击 “新建”（在 “用户变量” 部分下），然后输入以下信息：
-    - 变量名：DEEPSEEK_API_KEY
-    - 变量值：[你的 Deepseek API 密钥]
-
-    ![高级系统设置](./images/1_2_14.webp)
+   ![高级系统设置](./images/1_2_14.webp)
 
 ### 4.2 安装Miniconda
 
-1.  **下载安装程序**
+1. **下载安装程序**
 
-    优先推荐访问[清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/)，以获得更快的下载速度。根据你的系统选择最新的 `Windows-x86_64.exe` 版本下载。
+   优先推荐访问[清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/)，以获得更快的下载速度。根据你的系统选择最新的 `Windows-x86_64.exe` 版本下载。
 
-    ![选择Miniconda版本](images/ch1/miniconda-select-version.png)
+   ![选择Miniconda版本](images/ch1/miniconda-select-version.png)
 
-    你也可以从 [Miniconda 官方网站](https://docs.conda.io/en/latest/miniconda.html)下载。
+   你也可以从 [Miniconda 官方网站](https://docs.conda.io/en/latest/miniconda.html)下载。
+2. **运行安装向导**
 
-2.  **运行安装向导**
+   下载完成后，双击 `.exe` 文件启动安装。按照向导提示操作：
 
-    下载完成后，双击 `.exe` 文件启动安装。按照向导提示操作：
+   * **Welcome**: 点击 `Next`。
+     ![Welcome](./images/)
+   * **License Agreement**: 点击 `I Agree`。
+     ![License Agreement](./images/)
+   * **Installation Type**: 选择 `Just Me`，点击 `Next`。
+     ![Installation Type](./images/)
+   * **Choose Install Location**: 建议保持默认路径，或选择一个不含中文和空格的路径。点击 `Next`。
+     ![Install Location](./images/)
+   * **Advanced Installation Options**: **请不要勾选** “Add Miniconda3 to my PATH environment variable”。我们将稍后手动配置环境变量。点击 `Install`。
+     ![Advanced Options](./images/)
+   * **Installation Complete**: 安装完成后，点击 `Next`，然后取消勾选 “Learn more” 并点击 `Finish` 完成安装。
+     ![Installation Complete](./images/)
+3. **手动配置环境变量**
 
-    *   **Welcome**: 点击 `Next`。
-        ![Welcome](./images/)
-    *   **License Agreement**: 点击 `I Agree`。
-        ![License Agreement](./images/)
-    *   **Installation Type**: 选择 `Just Me`，点击 `Next`。
-        ![Installation Type](./images/)
-    *   **Choose Install Location**: 建议保持默认路径，或选择一个不含中文和空格的路径。点击 `Next`。
-        ![Install Location](./images/)
-    *   **Advanced Installation Options**: **请不要勾选** “Add Miniconda3 to my PATH environment variable”。我们将稍后手动配置环境变量。点击 `Install`。
-        ![Advanced Options](./images/)
-    *   **Installation Complete**: 安装完成后，点击 `Next`，然后取消勾选 “Learn more” 并点击 `Finish` 完成安装。
-        ![Installation Complete](./images/)
+   为了能在任意终端窗口使用 `conda` 命令，需要手动配置环境变量。
 
-3.  **手动配置环境变量**
+   * 在Windows搜索栏中搜索“编辑系统环境变量”并打开。
+     ![编辑系统环境变量](./images/)
+   * 在“系统属性”窗口中，点击“环境变量”。
+     ![环境变量按钮](./images/)
+   * 在“环境变量”窗口中，找到“系统变量”下的 `Path` 变量，选中并点击“编辑”。
+     ![编辑Path变量](./images/)
+   * 在“编辑环境变量”窗口中，新建三个路径，将它们指向你 Miniconda 的安装目录下的相应文件夹。如果你的安装路径是 `D:\Miniconda3`，则需要添加：
+     ```
+     D:\Miniconda3
+     D:\Miniconda3\Scripts
+     D:\Miniconda3\Library\bin
+     ```
 
-    为了能在任意终端窗口使用 `conda` 命令，需要手动配置环境变量。
-
-    *   在Windows搜索栏中搜索“编辑系统环境变量”并打开。
-        ![编辑系统环境变量](./images/)
-    *   在“系统属性”窗口中，点击“环境变量”。
-        ![环境变量按钮](./images/)
-    *   在“环境变量”窗口中，找到“系统变量”下的 `Path` 变量，选中并点击“编辑”。
-        ![编辑Path变量](./images/)
-    *   在“编辑环境变量”窗口中，新建三个路径，将它们指向你 Miniconda 的安装目录下的相应文件夹。如果你的安装路径是 `D:\Miniconda3`，则需要添加：
-        ```
-        D:\Miniconda3
-        D:\Miniconda3\Scripts
-        D:\Miniconda3\Library\bin
-        ```
-        ![添加路径](./images/)
-    *   完成后，一路点击“确定”保存更改。
+     ![添加路径](./images/)
+   * 完成后，一路点击“确定”保存更改。
 
 ### 4.3 配置 Conda 镜像源
 
@@ -377,7 +353,6 @@ git --version
    ```bash
    cd [你希望存放项目的路径]
    ```
-
 2. **克隆仓库**
    使用以下命令拉取 `all-in-rag` 仓库：
 
@@ -386,7 +361,6 @@ git --version
    ```
 
    等待下载完成，项目代码将存放在当前目录下的 `all-in-rag` 文件夹中。
-
 3. **进入项目目录**
    拉取代码后，进入项目目录：
 
@@ -403,7 +377,6 @@ git --version
    ```bash
    conda create --name all-in-rag python=3.12.7
    ```
-
 2. **激活虚拟环境**
 
    所有系统统一使用以下命令激活虚拟环境：
@@ -411,11 +384,10 @@ git --version
    ```bash
    conda activate all-in-rag
    ```
+3. **依赖安装**
+   如果严格安装上述流程当前应该在项目根目录，进入code目录安装依赖库
 
-3.  **依赖安装**
-    如果严格安装上述流程当前应该在项目根目录，进入code目录安装依赖库
-
-    ```bash
-    cd code
-    pip install -r requirements.txt
-    ```
+   ```bash
+   cd code
+   pip install -r requirements.txt
+   ```

@@ -4,6 +4,8 @@ from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, Field
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_deepseek import ChatDeepSeek
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())
 
 # 初始化 LLM
 llm = ChatDeepSeek(
@@ -17,9 +19,11 @@ class PersonInfo(BaseModel):
     age: int = Field(description="人物年龄")
     skills: List[str] = Field(description="技能列表")
 
+
 # 2. 创建解析器
 parser = PydanticOutputParser(pydantic_object=PersonInfo)
 
+# import pdb; pdb.set_trace()
 # 3. 创建提示模板
 prompt = PromptTemplate(
     template="请根据以下文本提取信息。\n{format_instructions}\n{text}\n",
@@ -33,12 +37,15 @@ prompt = PromptTemplate(
 # print("--------------------------\n")
 
 # 4. 创建处理链
-chain = prompt | llm | parser
+chain = prompt | llm 
 
 # 5. 定义输入文本并执行调用链
 text = "张三今年30岁，他擅长Python和Go语言。"
 result = chain.invoke({"text": text})
 
+import pdb; pdb.set_trace()
+
+result = parser.invoke(result)
 # 6. 打印结果
 print("\n--- 解析结果 ---")
 print(f"结果类型: {type(result)}")

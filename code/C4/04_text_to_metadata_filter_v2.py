@@ -6,6 +6,8 @@ from openai import OpenAI
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 import logging
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())
 
 logging.basicConfig(level=logging.INFO)
 

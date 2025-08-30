@@ -8,10 +8,12 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_deepseek import ChatDeepSeek
+from langchain_openai import ChatOpenAI,OpenAIEmbeddings
+
 
 load_dotenv()
 
-markdown_path = "../../data/C1/markdown/easy-rl-chapter1.md"
+markdown_path = "data/C1/markdown/easy-rl-chapter1.md"
 
 # 加载本地markdown文件
 loader = UnstructuredMarkdownLoader(markdown_path)
@@ -22,12 +24,12 @@ text_splitter = RecursiveCharacterTextSplitter()
 chunks = text_splitter.split_documents(docs)
 
 # 中文嵌入模型
-embeddings = HuggingFaceEmbeddings(
-    model_name="BAAI/bge-small-zh-v1.5",
-    model_kwargs={'device': 'cpu'},
-    encode_kwargs={'normalize_embeddings': True}
-)
-  
+# embeddings = HuggingFaceEmbeddings(
+#     model_name="BAAI/bge-small-zh-v1.5",
+#     model_kwargs={'device': 'cpu'},
+#     encode_kwargs={'normalize_embeddings': True}
+# )
+embeddings = OpenAIEmbeddings(model='BAAI/bge-m3',base_url="https://api.siliconflow.cn/v1") #初始化
 # 构建向量存储
 vectorstore = InMemoryVectorStore(embeddings)
 vectorstore.add_documents(chunks)
@@ -46,12 +48,13 @@ prompt = ChatPromptTemplate.from_template("""请根据下面提供的上下文�
                                           )
 
 # 配置大语言模型
-llm = ChatDeepSeek(
-    model="deepseek-chat",
-    temperature=0.7,
-    max_tokens=2048,
-    api_key=os.getenv("DEEPSEEK_API_KEY")
-)
+# llm = ChatDeepSeek(
+#     model="deepseek-chat",
+#     temperature=0.7,
+#     max_tokens=2048,
+#     api_key=os.getenv("DEEPSEEK_API_KEY")
+# )
+llm = ChatOpenAI(model='Qwen/Qwen3-30B-A3B-Instruct-2507',base_url="https://api.siliconflow.cn/v1")
 
 # 用户查询
 question = "文中举了哪些例子？"

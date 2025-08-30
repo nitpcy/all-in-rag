@@ -12,6 +12,8 @@ from llama_index.core.evaluation import (
 )
 from llama_index.core.evaluation.eval_utils import get_results_df
 from llama_index.core.evaluation import DatasetGenerator, QueryResponseDataset
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())
 
 Settings.llm = DeepSeek(model="deepseek-chat", temperature=0.1, api_key=os.getenv("DEEPSEEK_API_KEY"))
 Settings.embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en")
@@ -50,6 +52,7 @@ async def main():
         ],
     )
     sentence_retriever = sentence_index.as_retriever(similarity_top_k=2)
+
 
     # 2.2 常规分块检索（基准）
     base_parser = SentenceSplitter(chunk_size=512)

@@ -155,7 +155,7 @@ class RecipeRAGSystem:
             # 详细查询和一般查询使用智能重写
             print("🤖 智能分析查询...")
             rewritten_query = self.generation_module.query_rewrite(question)
-        
+        # import pdb;pdb.set_trace()
         # 3. 检索相关子块
         print("🔍 检索相关文档...")
         relevant_chunks = self.retrieval_module.hybrid_search(rewritten_query, top_k=self.config.top_k)

@@ -1,6 +1,8 @@
 import os
 import sys
 import sqlite3
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())  # 读取环境变量文件
 
 # 添加text2sql模块路径
 sys.path.append(os.path.join(os.path.dirname(__file__), 'text2sql'))
@@ -24,7 +26,11 @@ def setup_demo():
     
     # 初始化Text2SQL代理
     print("初始化Text2SQL代理...")
-    agent = SimpleText2SQLAgent(api_key=api_key)
+    try:
+        agent = SimpleText2SQLAgent(api_key=api_key)
+    except Exception as e:
+        print(f"初始化Text2SQL代理失败: {str(e)}")
+        return None
     
     # 连接数据库
     print("连接数据库...")

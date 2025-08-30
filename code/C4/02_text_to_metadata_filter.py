@@ -6,7 +6,8 @@ from langchain.retrievers.self_query.base import SelfQueryRetriever
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 import logging
-
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())  # 读取环境变量文件
 logging.basicConfig(level=logging.INFO)
 
 # 1. 初始化视频数据
@@ -23,7 +24,6 @@ try:
     
     for doc in docs:
         original = doc.metadata
-        
         # 提取基本元数据字段
         metadata = {
             'title': original.get('title', '未知标题'),
@@ -32,12 +32,22 @@ try:
             'view_count': original.get('stat', {}).get('view', 0),
             'length': original.get('duration', 0),
         }
-        
+        doc.page_content = original.get("ugc_season", {}).get("intro", "未找到合集简介")
+        original.get('description')
         doc.metadata = metadata
         bili.append(doc)
-        
+
 except Exception as e:
     print(f"加载BiliBili视频失败: {str(e)}")
+
+for i,doc in enumerate(bili):
+    #打印每个doc的pagecontent
+    print(f"--- 视频 {i+1} ---")
+    print(f"page_content: {doc.page_content}")
+    print(f"视频时长(s): {doc.metadata.get('length', '未知')}")
+
+import pdb; pdb.set_trace()
+
 
 if not bili:
     print("没有成功加载任何视频，程序退出")
@@ -90,7 +100,8 @@ retriever = SelfQueryRetriever.from_llm(
 # 5. 执行查询示例
 queries = [
     "时间最短的视频",
-    "时长大于600秒的视频"
+    # "时长大于600秒的视频"
+    "我是一个小白，我想学习prompt优化，推荐相关视频",
 ]
 
 for query in queries:

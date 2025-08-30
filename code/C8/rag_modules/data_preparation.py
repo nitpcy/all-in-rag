@@ -80,6 +80,7 @@ class DataPreparationModule:
         Args:
             doc: 需要增强元数据的文档
         """
+        
         file_path = Path(doc.metadata.get('source', ''))
         path_parts = file_path.parts
         
@@ -97,6 +98,7 @@ class DataPreparationModule:
         }
         
         doc.metadata['category'] = '其他'
+
         for key, value in category_mapping.items():
             if key in path_parts:
                 doc.metadata['category'] = value
@@ -128,7 +130,6 @@ class DataPreparationModule:
             分块后的文档列表
         """
         logger.info("正在进行Markdown结构感知分块...")
-
         if not self.documents:
             raise ValueError("请先加载文档")
 
@@ -172,6 +173,7 @@ class DataPreparationModule:
         for doc in self.documents:
             try:
                 # 检查文档内容是否包含Markdown标题
+
                 content_preview = doc.page_content[:200]
                 has_headers = any(line.strip().startswith('#') for line in content_preview.split('\n'))
 

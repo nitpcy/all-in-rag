@@ -6,17 +6,17 @@ flowchart LR
     INPUT[📦 接收文本块chunks] --> INDEX_CHECK{📂 检查索引缓存}
     INDEX_CHECK -->|存在| LOAD_INDEX[⚡ 加载已保存索引]
     INDEX_CHECK -->|不存在| BUILD_INDEX[🔨 构建新索引]
-    
+  
     BUILD_INDEX --> EMBED[🤖 BGE嵌入模型]
     EMBED --> FAISS[📊 FAISS向量索引]
     FAISS --> SAVE[💾 保存索引]
-    
+  
     LOAD_INDEX --> SETUP[🔧 设置检索器]
     SAVE --> SETUP
-    
+  
     SETUP --> QUERY[❓ 用户查询]
     QUERY --> HYBRID[🔍 RRF混合检索]
-    
+  
     %% 混合检索详细流程
     subgraph HybridProcess [RRF混合检索过程]
         H1[📊 向量检索语义相似度]
@@ -25,7 +25,7 @@ flowchart LR
         H1 --> H3
         H2 --> H3
     end
-    
+  
     %% 索引构建详细流程
     subgraph IndexProcess [索引构建过程]
         I1[📝 文本向量化]
@@ -33,28 +33,28 @@ flowchart LR
         I3[💾 索引持久化]
         I1 --> I2 --> I3
     end
-    
+  
     %% 检索器设置流程
     subgraph SetupProcess [检索器设置过程]
         S1[🔍 向量检索器设置]
         S2[📋 BM25检索器设置]
         S1 --> S2
     end
-    
+  
     HYBRID --> RESULT[📖 检索结果]
-    
+  
     %% 连接子流程
     BUILD_INDEX -.-> IndexProcess
     HYBRID -.-> HybridProcess
     SETUP -.-> SetupProcess
-    
+  
     %% 样式定义
     classDef index fill:#fff3e0,stroke:#e65100,stroke-width:2px
     classDef retrieval fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
     classDef cache fill:#fff8e1,stroke:#f57c00,stroke-width:2px
     classDef subprocess fill:#f1f8e9,stroke:#33691e,stroke-width:2px
     classDef output fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
-    
+  
     %% 应用样式
     class BUILD_INDEX,EMBED,FAISS,SAVE index
     class SETUP,QUERY,HYBRID retrieval
@@ -100,8 +100,6 @@ class IndexConstructionModule:
 - `embeddings`: HuggingFace嵌入模型实例
 - `vectorstore`: FAISS向量存储实例
 
-
-
 ### 2.2 嵌入模型初始化
 
 ```python
@@ -121,18 +119,18 @@ def build_vector_index(self, chunks: List[Document]) -> FAISS:
     """构建向量索引"""
     if not chunks:
         raise ValueError("文档块列表不能为空")
-    
+  
     # 提取文本内容
     texts = [chunk.page_content for chunk in chunks]
     metadatas = [chunk.metadata for chunk in chunks]
-    
+  
     # 构建FAISS向量索引
     self.vectorstore = FAISS.from_texts(
         texts=texts,
         embedding=self.embeddings,
         metadatas=metadatas
     )
-    
+  
     return self.vectorstore
 ```
 
@@ -145,20 +143,20 @@ def save_index(self):
     """保存向量索引到配置的路径"""
     if not self.vectorstore:
         raise ValueError("请先构建向量索引")
-    
+  
     # 确保保存目录存在
     Path(self.index_save_path).mkdir(parents=True, exist_ok=True)
-    
+  
     self.vectorstore.save_local(self.index_save_path)
 
 def load_index(self):
     """从配置的路径加载向量索引"""
     if not self.embeddings:
         self.setup_embeddings()
-    
+  
     if not Path(self.index_save_path).exists():
         return None
-    
+  
     self.vectorstore = FAISS.load_local(
         self.index_save_path, 
         self.embeddings,
@@ -221,11 +219,11 @@ def hybrid_search(self, query: str, top_k: int = 3) -> List[Document]:
 
 def _rrf_rerank(self, vector_results: List[Document], bm25_results: List[Document]) -> List[Document]:
     """RRF (Reciprocal Rank Fusion) 重排"""
-    
+  
     # RRF融合算法
     rrf_scores = {}
     k = 60  # RRF参数
-    
+  
     # 计算向量检索的RRF分数
     for rank, doc in enumerate(vector_results):
         doc_id = id(doc)
@@ -248,11 +246,13 @@ def _rrf_rerank(self, vector_results: List[Document], bm25_results: List[Documen
 在当前系统中，两种检索方式各有优势：
 
 **向量检索的优势**：
+
 - 理解语义相似性，如"简单易做的菜"能匹配到标记为"简单"的菜谱
 - 处理同义词和近义词，如"制作方法"和"做法"、"烹饪步骤"
 - 理解用户意图，如"适合新手"能找到难度较低的菜谱
 
 **BM25检索的优势**：
+
 - 精确匹配菜名，如"宫保鸡丁"能准确找到对应菜谱
 - 匹配具体食材，如"土豆丝"、"西红柿"等关键词
 - 处理专业术语，如"爆炒"、"红烧"等烹饪手法
@@ -276,6 +276,7 @@ def metadata_filtered_search(self, query: str, filters: Dict[str, Any],
 ```
 
 **过滤检索应用场景**：
+
 - 用户询问"推荐几道素菜"时，可以按菜品分类过滤，只检索素菜相关的内容
 - 新手用户问"有什么简单的菜谱"时，可以按难度等级过滤，只返回标记为"简单"的菜谱
 - 想做汤品时询问"今天喝什么汤"，可以按分类过滤出所有汤品菜谱

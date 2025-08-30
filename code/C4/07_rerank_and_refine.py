@@ -15,6 +15,8 @@ from typing import Sequence
 import torch
 from transformers import AutoTokenizer, AutoModel
 import torch.nn.functional as F
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())
 
 class ColBERTReranker(BaseDocumentCompressor):
     """ColBERT重排器"""

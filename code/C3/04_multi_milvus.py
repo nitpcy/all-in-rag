@@ -63,6 +63,7 @@ def visualize_results(query_image_path: str, retrieved_images: list, img_height:
 
     return np.hstack([query_display_area, panoramic_image])
 
+# import pdb; pdb.set_trace()
 # 3. 初始化客户端
 print("--> 正在初始化编码器和Milvus客户端...")
 encoder = Encoder(MODEL_NAME, MODEL_PATH)
